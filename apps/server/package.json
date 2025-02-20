@@ -2,12 +2,26 @@
   "name": "server",
   "type": "module",
   "scripts": {
+    "docker:compose:up": "docker compose up -d",
+    "docker:compose:down": "docker compose down",
     "build": "tsc --outDir dist",
-    "lint": "eslint --fix ."
+    "lint": "eslint  --fix .",
+    "migrate:up": "dotenv npx node-pg-migrate up -- --migrations-table=__migrations",
+    "migrate:down": "dotenv npx node-pg-migrate down -- --migrations-table=__migrations",
+    "migrate:create": "node-pg-migrate create --migration-file-language sql --template-file-name ../../node_modules/node-pg-migrate/templates/migration-template.sql",
+    "start": "tsx watch  --clean-screen-false --env-file=.env src/index.ts"
   },
   "devDependencies": {
     "@eslint/js": "^9.20.0",
+    "@types/node": "^22.13.4",
+    "@types/pg": "^8.11.11",
+    "dotenv-cli": "^8.0.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.24.1"
+  },
+  "dependencies": {
+    "node-pg-migrate": "^7.9.1",
+    "pg": "^8.13.3"
   }
 }
